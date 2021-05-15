@@ -5,23 +5,115 @@ import numpy as np
 import networkx as nx
 from collections import deque
 
-NUM_TUBES = 14
-TUBE_VOLUME = 4
-LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m"]
-STARTING_LEVEL_105 = "aafb,cegh,ijhk,kjgk,bmjf,fifm,djhi,dghd,bace,ecmi,bdmc,kgae,,"
-STARTING_GAME_STATE = STARTING_LEVEL_105
+YELLOW = "a"
+ORANGE = "b"
+GRAY = "c"
+LT_GREEN = "d"
+LT_BLUE = "e"
+OLIVE_GREEN = "f"
+PURPLE = "g"
+RED = "h"
+PINK = "i"
+BROWN = "j"
+DK_BLUE = "k"
+DK_GREEN = "m"
+COLORS = [
+    YELLOW,
+    ORANGE,
+    GRAY,
+    LT_GREEN,
+    LT_BLUE,
+    OLIVE_GREEN,
+    PURPLE,
+    RED,
+    PINK,
+    BROWN,
+    DK_BLUE,
+    DK_GREEN,
+]
 
 # NUM_TUBES = 5
 # TUBE_VOLUME = 4
-# LETTERS = ["y", "r", "b"]
-# STARTING_TEST = "yyrb,ryrr,bbby,,"
-# STARTING_GAME_STATE = STARTING_TEST
+# COLORS = ["y", "r", "b"]
+# STARTING_TEST1 = "yyrb,ryrr,bbby,,"
 
 # NUM_TUBES = 6
 # TUBE_VOLUME = 4
-# LETTERS = ["r", "b", "y", "g"]
-# STARTING_TEST = "yrrr,gbyy,gryb,bbgg,,"
-# STARTING_GAME_STATE = STARTING_TEST
+# COLORS = ["r", "b", "y", "g"]
+# STARTING_TEST2 = "yrrr,gbyy,gryb,bbgg,,"
+
+# NUM_TUBES = 14
+# TUBE_VOLUME = 4
+# COLORS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "m"]
+# STARTING_LEVEL_105 = "aafb,cegh,ijhk,kjgk,bmjf,fifm,djhi,dghd,bace,ecmi,bdmc,kgae,,"
+
+## Level 107
+# NUM_TUBES = 14
+# TUBE_VOLUME = 4
+# TUBES = [
+#     str(YELLOW + ORANGE + GRAY + LT_GREEN),
+#     str(LT_BLUE + OLIVE_GREEN + PURPLE + RED),
+#     str(PURPLE + LT_GREEN + PINK + OLIVE_GREEN),
+#     str(BROWN + RED + PINK + YELLOW),
+#     str(PURPLE + BROWN + DK_BLUE + OLIVE_GREEN),
+#     str(YELLOW + PURPLE + GRAY + OLIVE_GREEN),
+#     str(DK_GREEN + LT_BLUE + GRAY + ORANGE),
+#     str(PINK + LT_BLUE + DK_GREEN + RED),
+#     str(LT_GREEN + LT_BLUE + DK_BLUE + DK_BLUE),
+#     str(ORANGE + PINK + BROWN + DK_GREEN),
+#     str(ORANGE + YELLOW + LT_GREEN + GRAY),
+#     str(DK_BLUE + DK_GREEN + BROWN + RED),
+#     "",
+#     "",
+# ]
+
+# Level 145
+# NUM_TUBES = 14
+# TUBE_VOLUME = 4
+# TUBES = [
+#     str(BROWN + LT_GREEN + DK_BLUE + GRAY),
+#     str(DK_GREEN + RED + RED + DK_GREEN),
+#     str(PINK + DK_BLUE + OLIVE_GREEN + LT_BLUE),
+#     str(OLIVE_GREEN + GRAY + BROWN + ORANGE),
+#     str(DK_BLUE + ORANGE + LT_BLUE + PURPLE),
+#     str(YELLOW + YELLOW + LT_GREEN + LT_BLUE),
+#     str(OLIVE_GREEN + DK_BLUE + PURPLE + GRAY),
+#     str(PINK + RED + DK_GREEN + ORANGE),
+#     str(LT_BLUE + YELLOW + GRAY + BROWN),
+#     str(PURPLE + PINK + BROWN + OLIVE_GREEN),
+#     str(RED + LT_GREEN + DK_GREEN + PURPLE),
+#     str(YELLOW + ORANGE + LT_GREEN + PINK),
+#     "",
+#     "",
+# ]
+
+# Level 159
+NUM_TUBES = 14
+TUBE_VOLUME = 4
+TUBES = [
+    str(BROWN + ORANGE + GRAY + BROWN),
+    str(PURPLE + LT_BLUE + OLIVE_GREEN + PINK),
+    str(RED + ORANGE + OLIVE_GREEN + GRAY),
+    str(PINK + BROWN + RED + DK_BLUE),
+    str(DK_GREEN + DK_BLUE + YELLOW + ORANGE),
+    str(DK_BLUE + ORANGE + LT_GREEN + YELLOW),
+    str(LT_BLUE + LT_GREEN + LT_GREEN + DK_BLUE),
+    # row 2
+    str(OLIVE_GREEN + DK_GREEN + PURPLE + PINK),
+    str(YELLOW + DK_GREEN + LT_GREEN + OLIVE_GREEN),
+    str(LT_BLUE + BROWN + GRAY + PURPLE),
+    str(LT_BLUE + GRAY + PURPLE + DK_GREEN),
+    str(PINK + RED + RED + YELLOW),
+    "",
+    "",
+]
+
+STARTING_GAME_STATE = ""
+for tube in TUBES:
+    STARTING_GAME_STATE += tube + ","
+STARTING_GAME_STATE = STARTING_GAME_STATE[:-1]
+
+print("foo")
 
 
 def main():
@@ -65,7 +157,7 @@ def is_game_over(in_game_state: str) -> bool:
         if len(tube) == 0:
             continue
 
-        for letter in LETTERS:
+        for letter in COLORS:
             count = tube.count(letter)
             # check if letter is spread out among multiple tubes
             if 0 < count < len(tube):
